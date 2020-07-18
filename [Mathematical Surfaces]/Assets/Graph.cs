@@ -1,11 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
+using UnityEditor;
 using UnityEngine;
 
 public class Graph : MonoBehaviour {
     public Transform pointPrefab;
 
     public Transform[] points;
+
+    bool hasAwakend = false;
 
     [Range(10, 100)]
     public int resolution = 10;
@@ -17,18 +22,18 @@ public class Graph : MonoBehaviour {
     };
 
     void Awake() {
-        float step = 2f / resolution;
-        Vector3 scale = Vector3.one * step;
-        Vector3 position = Vector3.zero;
-        points = new Transform[resolution];
-        for (int i = 0; i < points.Length; i++) {
-            Transform point = Instantiate(pointPrefab);
-            points[i] = point;
-            position.x = (i + 0.5f) * step - 1f;
+        InitialiseCubes();
+        hasAwakend = true;
+    }
 
-            point.localPosition = position;
-            point.localScale = scale;
-            point.SetParent(transform, false);
+    void OnValidate() {
+        if (EditorApplication.isPlaying) {
+            if (hasAwakend) {
+                for (int i = 0; i < points.Length; i++) {
+                    Destroy(points[i].gameObject);
+                }
+                InitialiseCubes();
+            }
         }
     }
 
@@ -53,4 +58,22 @@ public class Graph : MonoBehaviour {
         y += Mathf.Sin(2f * Mathf.PI * (x + t)) / 2f;
         return y;
     }
+
+    private void InitialiseCubes() {
+        float step = 2f / resolution;
+        Vector3 scale = Vector3.one * step;
+        Vector3 position = Vector3.zero;
+        points = new Transform[resolution];
+        for (int i = 0; i < points.Length; i++) {
+            Transform point = Instantiate(pointPrefab);
+            points[i] = point;
+            position.x = (i + 0.5f) * step - 1f;
+
+            point.localPosition = position;
+            point.localScale = scale;
+            point.SetParent(transform, false);
+        }
+    }
+
+
 }
