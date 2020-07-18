@@ -26,8 +26,10 @@ public class FlyCam : MonoBehaviour {
     [Range(1, 8)]
     private float MouseYSens = 2f;
     // Use this for initialization
+
     [SerializeField]
-    private bool HideTheCursor;
+    private bool HideTheCursor = false;
+
     void Start() {
         cam = GetComponent<Camera>();
         m_camRot = transform.localRotation;

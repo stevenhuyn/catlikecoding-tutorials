@@ -6,5 +6,9 @@ public enum GraphFunctionName {
     Sine,
     Sine2DFunction,
     MultiSine,
-    MultiSine2DFunction
+    MultiSine2DFunction,
+    Ripple,
+    Cylinder,
+    Sphere,
+    Torus
 }
