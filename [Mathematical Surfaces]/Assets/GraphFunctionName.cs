@@ -4,5 +4,7 @@ using UnityEngine;
 
 public enum GraphFunctionName {
     Sine,
-    MultiSine
+    Sine2DFunction,
+    MultiSine,
+    MultiSine2DFunction
 }
